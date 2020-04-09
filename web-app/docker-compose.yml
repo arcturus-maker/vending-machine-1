@@ -1,0 +1,19 @@
+version: "3"
+
+volumes:
+  data-volume:
+
+services:
+  app:
+    container_name: vending-machine.app
+    restart: always
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongo
+  mongo:
+    container_name: vending-machine.mongo
+    image: mongo
+    volumes:
+      - data-volume:/data/db
