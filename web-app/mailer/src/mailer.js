@@ -6,7 +6,7 @@ const FROM = '"Vending Machine" <vending@makerindustries.com>';
 // TODO: Replace this with something client configurable
 const accountPromise = nodemailer.createTestAccount();
 
-export const sendMail = async (to, subject, message)  => {
+export const sendMail = async ({ to, subject, body })  => {
   const account = await accountPromise;
   const transporter = nodemailer.createTransport({
     host: "smtp.ethereal.email",
@@ -22,7 +22,7 @@ export const sendMail = async (to, subject, message)  => {
     from: FROM,
     to,
     subject,
-    html: `<b>${message}</b>`
+    html: body
   });
 
   return nodemailer.getTestMessageUrl(info);

@@ -1,5 +1,6 @@
 import express from 'express';
 import monk from 'monk';
+import buildEmail from './build-email.js';
 
 const app = express();
 const db = monk('mongo:27017/vending-machine');
@@ -22,11 +23,11 @@ app.get('/get', async (req, res) => {
 
 app.get('/email', async (req, res) => {
   const emails = db.get('emails');
-  const doc = await emails.insert({
+  const doc = await emails.insert(buildEmail({
     to: 'continuities@gmail.com',
-    recipient: 'Michael',
-    content: 'This is a test' 
-  });
+    name: 'Michael',
+    content: 'This is a test'
+  }));
   res.json(doc);
 });
 
