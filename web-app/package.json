@@ -1,16 +1,11 @@
 {
-  "name": "server",
+  "name": "web-app",
   "version": "1.0.0",
+  "main": "index.js",
   "license": "MIT",
-  "type": "module",
   "scripts": {
-    "start-server": "node src/server.js",
     "build": "docker-compose build",
     "start": "docker-compose up -d",
     "stop": "docker-compose stop"
-  },
-  "dependencies": {
-    "express": "^4.17.1",
-    "monk": "^7.1.2"
   }
 }

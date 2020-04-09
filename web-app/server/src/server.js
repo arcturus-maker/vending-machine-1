@@ -20,4 +20,14 @@ app.get('/get', async (req, res) => {
   res.json(docs);
 });
 
+app.get('/email', async (req, res) => {
+  const emails = db.get('emails');
+  const doc = await emails.insert({
+    to: 'continuities@gmail.com',
+    recipient: 'Michael',
+    content: 'This is a test' 
+  });
+  res.json(doc);
+});
+
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));

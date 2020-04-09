@@ -4,14 +4,26 @@ volumes:
   data-volume:
 
 services:
-  app:
-    container_name: vending-machine.app
+
+  # Hosts the input form and provides a backend API
+  server:
+    container_name: vending-machine.server
     restart: always
-    build: .
+    build: ./server
     ports:
       - "8080:8080"
     depends_on:
       - mongo
+
+  # Mailer daemon that sends emails queued in mongo
+  mailer:
+    container_name: vending-machine.mailer
+    restart: always
+    build: ./mailer
+    depends_on:
+      - mongo
+  
+  # Stores prize data and email queues
   mongo:
     container_name: vending-machine.mongo
     image: mongo

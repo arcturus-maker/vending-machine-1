@@ -11,8 +11,5 @@ RUN mkdir -p /opt/app && cp -a /tmp/node_modules /opt/app/
 WORKDIR /opt/app
 ADD . /opt/app
 
-# Open port 8080
-EXPOSE 8080
-
 # Run the app
-CMD [ "yarn", "start-server" ]
+CMD [ "yarn", "start" ]
