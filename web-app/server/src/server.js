@@ -1,7 +1,7 @@
 import express from 'express';
 import monk from 'monk';
 import buildEmail from './build-email.js';
-import { generateQR, generateCode } from './prize-code.js';
+import { generateQRData, generateCode } from './prize-code.js';
 
 const app = express();
 const db = monk('mongo:27017/vending-machine');
@@ -14,19 +14,6 @@ app.use(express.static('static'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.get('/qr/:code.png', async (req, res) => {
-  try {
-    const qrCanvas = await generateQR(req.params.code, 200);
-    res.setHeader('Content-Type', 'image/png');
-    res.setHeader('Cache-Control', 'public, max-age=31557600');
-    qrCanvas.pngStream().pipe(res);
-  }
-  catch {
-    // Wasn't a valid code
-    res.redirect('/error.png');
-  }
-});
-
 app.post('/prize', async (req, res) => {
 
   // TODO: Validate that it's actually an email address
@@ -36,10 +23,11 @@ app.post('/prize', async (req, res) => {
   }
 
   const code = generateCode();
+  const imageData = await generateQRData(code, 200);
   const email = buildEmail({
     to: req.body.email,
     name: req.body.name,
-    content: `<img src='${SITE_URL}/qr/${code}.png'>`
+    content: `<img src='${imageData}'>`
   });
 
   try {

@@ -2,7 +2,7 @@ import QRCode from 'qrcode';
 import Canvas from 'canvas';
 import UUID from 'uuid';
 
-export const generateQR = (code, size) => {
+export const generateQRImage = (code, size) => {
   if (!isCode(code)) {
     return Promise.reject('Not a prize code');
   }
@@ -15,7 +15,14 @@ export const generateQR = (code, size) => {
       }
       resolve(canvas);
     });
-  })
+  });
+};
+
+export const generateQRData = (code, size) => {
+  if (!isCode(code)) {
+    return Promise.reject('Not a prize code');
+  }
+  return QRCode.toDataURL(code, { width: size });
 };
 
 export const generateCode = () => UUID.v4();
