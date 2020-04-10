@@ -5,9 +5,8 @@ import fs from 'fs';
 
 function loadTemplate(name) {
   const base = fileURLToPath(import.meta.url);
-  console.log(base);
   const source = fs.readFileSync(path.join(base, '..', '..', 'email-template', `${name}.hbs`), 'utf8');
-  return Handlebars.compile(source);
+  return Handlebars.compile(source, { noEscape: true });
 }
 
 const subjectTemplate = loadTemplate('subject');
