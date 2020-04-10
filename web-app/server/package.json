@@ -7,8 +7,10 @@
     "start": "node src/server.js"
   },
   "dependencies": {
+    "canvas": "^2.6.1",
     "express": "^4.17.1",
     "handlebars": "^4.7.6",
-    "monk": "^7.1.2"
+    "monk": "^7.1.2",
+    "qrcode": "^1.4.4"
   }
 }
