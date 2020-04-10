@@ -1,9 +1,11 @@
 import express from 'express';
+import multer from 'multer';
 import monk from 'monk';
 import buildEmail from './build-email.js';
 import { generateQRData, generateCode } from './prize-code.js';
 
 const app = express();
+const upload = multer();
 const db = monk('mongo:27017/vending-machine');
 
 // TODO: Make these configurable
@@ -12,6 +14,7 @@ const SITE_URL = 'http://localhost:8080';
 
 app.use(express.static('static'));
 app.use(express.urlencoded({ extended: true }));
+app.use(upload.array());
 app.use(express.json());
 
 app.post('/prize', async (req, res) => {

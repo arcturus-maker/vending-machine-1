@@ -1,8 +1,51 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        box-sizing: border-box;
+      }
+      body {
+        padding: 0 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      *, *::before, *::after {
+        box-sizing: inherit;
+      }
+      #main-form {
+        max-width: 720px;
+        display: flex;
+        flex-direction: column;
+      }
+      input, button {
+        padding: 20px 10px;
+        font-size: 32px;
+        margin-bottom: 20px;
+      }
+    </style>
   </head>
   <body>
-    Hello world
+    <form id="main-form">
+      <input id="name" name="name" placeholder="Enter your name" />
+      <input id="email" type="email" name="email" placeholder="Enter your email" />
+      <button type="submit">Submit</button>
+    </form>
+    <script type="text/javascript">
+      (function() {
+        const form = document.getElementById('main-form');
+        form.addEventListener('submit', e => {
+          e.preventDefault();
+          fetch('/prize', {
+            method: 'POST',
+            body: new FormData(form)
+          });
+        });
+      })();
+    </script>
   </body>
 </html>
